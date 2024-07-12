@@ -9,10 +9,13 @@ import torch.multiprocessing as mp
 from omegaconf import OmegaConf, DictConfig
 import trainers
 import wandb
+# Add requirement for wandb core
+wandb.require("core")
 import json
 import socket
 from typing import Optional, Set
 import resource
+
 
 
 OmegaConf.register_new_resolver("get_local_run_dir", lambda exp_name, local_dirs: get_local_run_dir(exp_name, local_dirs))

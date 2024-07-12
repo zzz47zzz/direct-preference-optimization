@@ -31,6 +31,8 @@ from utils import (
 )
 import numpy as np
 import wandb
+# Add requirement for wandb core
+wandb.require("core")
 import tqdm
 
 import random

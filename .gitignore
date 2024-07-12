@@ -1,0 +1,6 @@
+.vscode
+.cache
+.out
+.swp
+__pycache__
+outputs
