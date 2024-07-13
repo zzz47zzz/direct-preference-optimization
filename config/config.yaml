@@ -22,7 +22,7 @@ datasets:
 
 # wandb configuration
 wandb:
-  enabled: false
+  enabled: true
   entity: junhao-zheng
   project: "direct-preference-optimization"
 

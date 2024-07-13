@@ -9,6 +9,7 @@ import torch.multiprocessing as mp
 from omegaconf import OmegaConf, DictConfig
 import trainers
 import wandb
+wandb.login(key=os.environ["WANDB_API_ZJH"])
 # Add requirement for wandb core
 import sys
 if sys.version_info >= (3, 11):
@@ -34,13 +35,24 @@ def worker_main(rank: int, world_size: int, config: DictConfig, policy: nn.Modul
 
     if rank == 0 and config.wandb.enabled:
         os.environ['WANDB_CACHE_DIR'] = get_local_dir(config.local_dirs)
-        wandb.init(
-            entity=config.wandb.entity,
-            project=config.wandb.project,
-            config=OmegaConf.to_container(config),
-            dir=get_local_dir(config.local_dirs),
-            name=config.exp_name,
-        )
+        try:
+            wandb.init(
+                entity=config.wandb.entity,
+                project=config.wandb.project,
+                config=OmegaConf.to_container(config),
+                dir=get_local_dir(config.local_dirs),
+                name=config.exp_name,
+                mode='online'
+            )
+        except:
+            wandb.init(
+                entity=config.wandb.entity,
+                project=config.wandb.project,
+                config=OmegaConf.to_container(config),
+                dir=get_local_dir(config.local_dirs),
+                name=config.exp_name,
+                mode='offline'
+            )
 
     TrainerClass = getattr(trainers, config.trainer)
     print(f'Creating trainer on process {rank} with world size {world_size}')
