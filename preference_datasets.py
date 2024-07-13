@@ -143,7 +143,7 @@ def get_hh(split: str, silent: bool = False, cache_dir: str = None) -> Dict[str,
     try:
         dataset = datasets.load_dataset('Anthropic/hh-rlhf', split=split, cache_dir=cache_dir)
     except:
-        dataset = datasets.load_from_disk(os.path.join(cache_dir,'Anthropic--hh-rlhf'))
+        dataset = datasets.load_from_disk(os.path.join(cache_dir,'Anthropic--hh-rlhf'))[split]
     print('done')
 
     def split_prompt_and_responses(ex):
