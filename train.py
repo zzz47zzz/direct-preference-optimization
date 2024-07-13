@@ -10,7 +10,9 @@ from omegaconf import OmegaConf, DictConfig
 import trainers
 import wandb
 # Add requirement for wandb core
-wandb.require("core")
+import sys
+if sys.version_info >= (3, 11):
+    wandb.require("core")
 import json
 import socket
 from typing import Optional, Set

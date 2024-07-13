@@ -1,3 +1,4 @@
+import os
 import datasets
 import torch
 from torch.utils.data import DataLoader, Dataset
@@ -139,7 +140,10 @@ def get_hh(split: str, silent: bool = False, cache_dir: str = None) -> Dict[str,
        For this dataset, the sft_target is just the chosen response.
     """
     print(f'Loading HH dataset ({split} split) from Huggingface...')
-    dataset = datasets.load_dataset('Anthropic/hh-rlhf', split=split, cache_dir=cache_dir)
+    try:
+        dataset = datasets.load_dataset('Anthropic/hh-rlhf', split=split, cache_dir=cache_dir)
+    except:
+        dataset = datasets.load_from_disk(os.path.join(cache_dir,'Anthropic--hh-rlhf'))
     print('done')
 
     def split_prompt_and_responses(ex):
