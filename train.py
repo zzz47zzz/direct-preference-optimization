@@ -42,7 +42,7 @@ def worker_main(rank: int, world_size: int, config: DictConfig, policy: nn.Modul
                 config=OmegaConf.to_container(config),
                 dir=get_local_dir(config.local_dirs),
                 name=config.exp_name,
-                mode='online'
+                mode='online' if not config.wandb.offline else 'offline'
             )
         except:
             wandb.init(
